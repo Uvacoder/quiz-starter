@@ -1,26 +1,8 @@
 import React from 'react'
-import * as yup from 'yup'
-import {useFormik} from 'formik'
-
-const schema = yup.object().shape({
-  choice: yup.string().required('Please select one of the answers.').nullable(),
-})
+import useEggheadQuestion from '../../../hooks/useEggheadQuestion'
 
 const MultipleChoice = ({question, onSubmit}) => {
-  const [isSubmitted, setSubmitted] = React.useState(false)
-
-  const formik = useFormik({
-    initialValues: {
-      choice: null,
-    },
-    validationSchema: schema,
-    onSubmit: (values, actions) => {
-      if (formik.isValid) {
-        onSubmit(values, actions, question)
-        setSubmitted(true)
-      }
-    },
-  })
+  const {formik, isSubmitted} = useEggheadQuestion(question, onSubmit)
 
   return (
     <div>
@@ -36,11 +18,11 @@ const MultipleChoice = ({question, onSubmit}) => {
                   <input
                     disabled={isSubmitted}
                     type="radio"
-                    name="choice"
+                    name="value"
                     value={choice.value}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    checked={formik.values.choice === choice.value}
+                    checked={formik.values.value === choice.value}
                   />
                   {choice.text}
                   {isSubmitted
@@ -60,11 +42,11 @@ const MultipleChoice = ({question, onSubmit}) => {
       {question.explanation &&
         isSubmitted &&
         `${
-          question.correctAnswer === formik.values.choice
+          question.correctAnswer === formik.values.value
             ? 'Correct!'
             : 'Incorrect.'
         } ${question.explanation}`}
-      {formik.errors.choice}
+      {formik.errors.value}
     </div>
   )
 }

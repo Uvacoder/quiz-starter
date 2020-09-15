@@ -1,28 +1,9 @@
 import React from 'react'
-import * as yup from 'yup'
-import {useFormik} from 'formik'
-
-const schema = yup.object().shape({
-  choice: yup.mixed().oneOf(['0', '1', '2']).required('Choice is required'),
-})
+import useEggheadQuestion from '../../../hooks/useEggheadQuestion'
 
 const Theater = ({question, onSubmit}) => {
-  const [isSubmitted, setSubmitted] = React.useState(false)
+  const {formik, isSubmitted} = useEggheadQuestion(question, onSubmit)
   const [answerOpened, setAnswerOpened] = React.useState(false)
-
-  const formik = useFormik({
-    validateOnMount: false,
-    initialValues: {
-      choice: null,
-    },
-    validationSchema: schema,
-    onSubmit: (values, actions) => {
-      if (formik.isValid) {
-        onSubmit(values, actions, question)
-        setSubmitted(true)
-      }
-    },
-  })
 
   return (
     <div>
@@ -38,11 +19,11 @@ const Theater = ({question, onSubmit}) => {
                 <input
                   disabled={isSubmitted}
                   type="radio"
-                  name="choice"
+                  name="value"
                   value={'0'}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  checked={formik.values.choice === '0'}
+                  checked={formik.values.value === '0'}
                 />
                 No
               </label>
@@ -50,11 +31,11 @@ const Theater = ({question, onSubmit}) => {
                 <input
                   disabled={isSubmitted}
                   type="radio"
-                  name="choice"
+                  name="value"
                   value={'1'}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  checked={formik.values.choice === '1'}
+                  checked={formik.values.value === '1'}
                 />
                 Almost
               </label>
@@ -62,11 +43,11 @@ const Theater = ({question, onSubmit}) => {
                 <input
                   disabled={isSubmitted}
                   type="radio"
-                  name="choice"
+                  name="value"
                   value={'2'}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  checked={formik.values.choice === '2'}
+                  checked={formik.values.value === '2'}
                 />
                 Yes
               </label>

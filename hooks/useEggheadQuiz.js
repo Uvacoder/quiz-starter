@@ -11,9 +11,10 @@ export default function useEggheadQuiz(quiz) {
     const context = {quizId: quiz.id, questionId: question.id, date}
     const response = {...values, question, context}
     console.log({response})
+    window.alert(JSON.stringify(response, null, 2))
   }
 
-  function getQuestionIndex(question) {
+  function questionIndex(question) {
     findIndex(questions, {id: question.id})
   }
 
@@ -22,5 +23,5 @@ export default function useEggheadQuiz(quiz) {
     return questions[currentQuestionIndex + 1]
   }
 
-  return {questions, nextQuestion, onSubmit, getQuestionIndex}
+  return {questions, nextQuestion, questionIndex, onSubmit}
 }
