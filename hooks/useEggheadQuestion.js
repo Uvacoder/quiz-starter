@@ -1,5 +1,4 @@
 import React from 'react'
-import {findIndex} from 'lodash'
 import * as yup from 'yup'
 import {useFormik} from 'formik'
 
