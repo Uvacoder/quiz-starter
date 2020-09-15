@@ -41,22 +41,9 @@ export default function useEggheadQuestion(question, onSubmit) {
     }
   }
 
-  function getInitialValuesFor(type) {
-    switch (type) {
-      case 'multiple-choice':
-        return {value: ''}
-      case 'essay':
-        return {value: ''}
-      case 'theater':
-        return {value: ''}
-      default:
-        return {}
-    }
-  }
-
   const formik = useFormik({
     initialValues: {
-      ...getInitialValuesFor(type),
+      value: '',
     },
     validationSchema: schemaFor(type),
     onSubmit: (values, actions) => {
