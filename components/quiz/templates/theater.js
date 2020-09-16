@@ -1,13 +1,15 @@
 import React from 'react'
 import useEggheadQuestion from '../../../hooks/useEggheadQuestion'
 
-const Theater = ({question, onSubmit}) => {
+const Theater = ({question, onSubmit, isCompleted}) => {
   const {formik, isSubmitted} = useEggheadQuestion(question, onSubmit)
   const [answerOpened, setAnswerOpened] = React.useState(false)
 
   return (
     <div>
-      <h4>{question.type}</h4>
+      <h4>
+        {isCompleted(question) && '✅'} {question.type}
+      </h4>
       <p>{question.text}</p>
       <form onSubmit={formik.handleSubmit}>
         {answerOpened && (
@@ -65,7 +67,7 @@ const Theater = ({question, onSubmit}) => {
           {answerOpened ? 'hide answer' : 'show answer'}
         </button>
       )}
-      {formik.errors.choice}
+      {formik.errors.value}
     </div>
   )
 }

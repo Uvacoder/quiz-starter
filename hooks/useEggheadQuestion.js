@@ -2,7 +2,7 @@ import React from 'react'
 import * as yup from 'yup'
 import {useFormik} from 'formik'
 
-export default function useEggheadQuestion(question, onSubmit) {
+export default function useEggheadQuestion(question, onSubmit, quizId) {
   const {type, text, explanation, choices, correctAnswer} = question
   const [isSubmitted, setSubmitted] = React.useState(false)
 
@@ -10,10 +10,7 @@ export default function useEggheadQuestion(question, onSubmit) {
     switch (type) {
       case 'multiple-choice':
         return yup.object().shape({
-          value: yup
-            .string()
-            .required('Please select one of the answers.')
-            .nullable(),
+          value: yup.string().required('Pick one.').nullable(),
         })
 
       case 'essay':
@@ -29,10 +26,7 @@ export default function useEggheadQuestion(question, onSubmit) {
 
       case 'theater':
         return yup.object().shape({
-          value: yup
-            .mixed()
-            .oneOf(['0', '1', '2'])
-            .required('Choice is required'),
+          value: yup.mixed().oneOf(['0', '1', '2']).required('Pick one.'),
         })
 
       default:

@@ -8,7 +8,9 @@ import Sketch from './templates/sketch'
 import useEggheadQuiz from '../../hooks/useEggheadQuiz'
 
 const QuizTemplate = ({quiz}) => {
-  const {questions, onSubmit} = useEggheadQuiz(quiz)
+  const {questions, onSubmit, isCompleted, resetQuizProgress} = useEggheadQuiz(
+    quiz,
+  )
 
   return (
     <div>
@@ -39,9 +41,22 @@ const QuizTemplate = ({quiz}) => {
             question={question}
             onSubmit={onSubmit}
             key={question.id}
+            isCompleted={isCompleted}
           />
         )
       })}
+      <button
+        onClick={() =>
+          resetQuizProgress(
+            window.confirm(
+              'This will reset your progress in this quiz. Are you sure?',
+            ),
+          )
+        }
+        type="button"
+      >
+        reset quiz
+      </button>
     </div>
   )
 }
