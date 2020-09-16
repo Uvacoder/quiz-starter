@@ -1,5 +1,5 @@
 import React from 'react'
-import useEggheadQuestion from '../../../hooks/useEggheadQuestion'
+import useEggheadQuestion from 'hooks/useEggheadQuestion'
 
 const Theater = ({question, onSubmit, isCompleted}) => {
   const {formik, isSubmitted} = useEggheadQuestion(question, onSubmit)
