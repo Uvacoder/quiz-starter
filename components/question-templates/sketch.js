@@ -47,7 +47,6 @@ const Sketch = ({question, onSubmit, isCompleted}) => {
               onChange={onChange}
               options={options}
               user={{name: 'Excalidraw User'}}
-              initialData={output}
             />
           </div>
         </form>
