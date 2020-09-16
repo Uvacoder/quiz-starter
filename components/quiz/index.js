@@ -2,7 +2,7 @@ import React from 'react'
 
 import {MultipleChoice, Essay, Theater, Sketch} from './components'
 
-import useEggheadQuiz from '../../hooks/useEggheadQuiz'
+import useEggheadQuiz from 'hooks/useEggheadQuiz'
 
 const QuizTemplate = ({quiz}) => {
   const {questions, onSubmit, isCompleted, resetQuizProgress} = useEggheadQuiz(
