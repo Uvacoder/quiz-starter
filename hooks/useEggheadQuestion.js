@@ -29,6 +29,11 @@ export default function useEggheadQuestion(question, onSubmit, quizId) {
           value: yup.mixed().oneOf(['0', '1', '2']).required('Pick one.'),
         })
 
+      case 'sketch':
+        return yup.object().shape({
+          value: yup.array().required('Sketch something.'),
+        })
+
       default:
         return null
     }
