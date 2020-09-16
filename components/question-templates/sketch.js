@@ -19,10 +19,11 @@ const Sketch = ({question, onSubmit, isCompleted}) => {
     setOutput(sketch)
   }
 
-  console.log(formik.values)
   React.useEffect(() => {
     formik.setValues({value: output})
+    return () => {}
   }, [output])
+
   return (
     <div>
       <h4>

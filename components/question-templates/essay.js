@@ -3,6 +3,7 @@ import useEggheadQuestion from '../../hooks/useEggheadQuestion'
 
 const Essay = ({question, onSubmit, isCompleted}) => {
   const {formik, isSubmitted} = useEggheadQuestion(question, onSubmit)
+
   return (
     <div>
       <h4>

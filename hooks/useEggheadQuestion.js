@@ -40,6 +40,7 @@ export default function useEggheadQuestion(question, onSubmit, quizId) {
   }
 
   const formik = useFormik({
+    // enableReinitialize: true,
     initialValues: {
       value: '',
     },
