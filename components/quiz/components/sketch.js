@@ -1,6 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import useEggheadQuestion from '../../hooks/useEggheadQuestion'
+import useEggheadQuestion from '../../../hooks/useEggheadQuestion'
 
 const ExcalidrawWithoutSSR = dynamic(() => import('excalidraw'), {
   ssr: false,
