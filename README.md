@@ -1,6 +1,6 @@
-⚒ [Open in CodeSandbox](https://codesandbox.io/s/zealous-star-4nhnv?initialpath=%2Fdemo&module=%2Fpages%2F%5Bslug%5D.js)
+⚒ [Open in CodeSandbox](https://codesandbox.io/s/affectionate-proskuriakova-rv10o?initialpath=%2Fdemo&module=%2Fpages%2F%5Bslug%5D.js)
 
-☁️ [Live](https://quiz-delta.vercel.app/demo)
+☁️ [Live](https://quiz.vojta.vercel.app/demo)
 
 ### Develop
 `yarn dev` and visit [http://localhost:3000/demo](http://localhost:3000/demo)
