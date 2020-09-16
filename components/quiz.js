@@ -1,14 +1,16 @@
 import React from 'react'
 
-import MultipleChoice from './templates/multipleChoice'
-import Essay from './templates/essay'
-import Theater from './templates/theater'
-import Sketch from './templates/sketch'
+import MultipleChoice from './question-templates/multipleChoice'
+import Essay from './question-templates/essay'
+import Theater from './question-templates/theater'
+import Sketch from './question-templates/sketch'
 
-import useEggheadQuiz from '../../hooks/useEggheadQuiz'
+import useEggheadQuiz from '../hooks/useEggheadQuiz'
 
 const QuizTemplate = ({quiz}) => {
-  const {questions, onSubmit} = useEggheadQuiz(quiz)
+  const {questions, onSubmit, isCompleted, resetQuizProgress} = useEggheadQuiz(
+    quiz,
+  )
 
   return (
     <div>
@@ -24,9 +26,9 @@ const QuizTemplate = ({quiz}) => {
           case 'theater':
             QuestionToShow = Theater
             break
-          //   case 'sketch':
-          //     QuestionToShow = Sketch
-          //     break
+          case 'sketch':
+            QuestionToShow = Sketch
+            break
           // case 'trueFalse':
           //   QuestionToShow = TrueFalse
           //   break
@@ -39,9 +41,24 @@ const QuizTemplate = ({quiz}) => {
             question={question}
             onSubmit={onSubmit}
             key={question.id}
+            isCompleted={isCompleted(question)}
           />
         )
       })}
+      <br />
+      <br />
+      <button
+        onClick={() =>
+          resetQuizProgress(
+            window.confirm(
+              'This will reset your progress in this quiz. Are you sure?',
+            ),
+          )
+        }
+        type="button"
+      >
+        reset quiz
+      </button>
     </div>
   )
 }

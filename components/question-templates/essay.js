@@ -1,11 +1,14 @@
 import React from 'react'
-import useEggheadQuestion from '../../../hooks/useEggheadQuestion'
+import useEggheadQuestion from '../../hooks/useEggheadQuestion'
 
-const Essay = ({question, onSubmit}) => {
+const Essay = ({question, onSubmit, isCompleted}) => {
   const {formik, isSubmitted} = useEggheadQuestion(question, onSubmit)
+
   return (
     <div>
-      <h4>{question.type}</h4>
+      <h4>
+        {isCompleted && '✅'} {question.type}
+      </h4>
       <p>{question.text}</p>
       <form onSubmit={formik.handleSubmit}>
         <div role="group" aria-labelledby="choices">
