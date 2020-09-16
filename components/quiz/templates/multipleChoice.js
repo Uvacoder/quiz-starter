@@ -1,17 +1,12 @@
 import React from 'react'
-import useEggheadQuestion from '../../hooks/useEggheadQuestion'
+import useEggheadQuestion from '../../../hooks/useEggheadQuestion'
 
-const MultipleChoice = ({question, onSubmit, isCompleted}) => {
+const MultipleChoice = ({question, onSubmit}) => {
   const {formik, isSubmitted} = useEggheadQuestion(question, onSubmit)
-  const correctAnswer =
-    isSubmitted && question.correctAnswer === formik.values.value
 
   return (
     <div>
-      <h4>
-        {isCompleted && <span>{correctAnswer ? '✅' : '❎'}</span>}{' '}
-        {question.type}
-      </h4>
+      <h4>{question.type}</h4>
       <p>{question.text}</p>
       <form onSubmit={formik.handleSubmit}>
         <div role="group" aria-labelledby="choices">
