@@ -9,7 +9,7 @@ const MultipleChoice = ({question, onSubmit, isCompleted}) => {
   return (
     <div>
       <h4>
-        {isCompleted(question) && <span>{correctAnswer ? '✅' : '❎'}</span>}{' '}
+        {isCompleted && <span>{correctAnswer ? '✅' : '❎'}</span>}{' '}
         {question.type}
       </h4>
       <p>{question.text}</p>

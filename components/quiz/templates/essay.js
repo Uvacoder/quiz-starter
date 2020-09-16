@@ -6,7 +6,7 @@ const Essay = ({question, onSubmit, isCompleted}) => {
   return (
     <div>
       <h4>
-        {isCompleted(question) && '✅'} {question.type}
+        {isCompleted && '✅'} {question.type}
       </h4>
       <p>{question.text}</p>
       <form onSubmit={formik.handleSubmit}>

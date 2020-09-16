@@ -41,7 +41,7 @@ const QuizTemplate = ({quiz}) => {
             question={question}
             onSubmit={onSubmit}
             key={question.id}
-            isCompleted={isCompleted}
+            isCompleted={isCompleted(question)}
           />
         )
       })}
