@@ -1,4 +1,6 @@
-☁️ [Take a Demo Quiz](https://quiz.vojta.vercel.app/)
+### ☁️ [Take a demo quiz](https://quiz.vojta.vercel.app/)
+
+---
 
 ### Develop
 `yarn dev` and visit [http://localhost:3000/demo](http://localhost:3000/demo)
