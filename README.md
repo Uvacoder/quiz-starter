@@ -1,4 +1,4 @@
-### ☁️ [Take a Demo Quiz](https://quiz.vojta.vercel.app/)
+### ☁️ [Take a demo quiz](https://quiz.vojta.vercel.app/)
 
 ---
 
