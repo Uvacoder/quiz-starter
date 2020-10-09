@@ -10,6 +10,7 @@ import Markdown from '@/components/quiz/markdown'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
 
 const MultipleImageChoice = ({
+  // formik,
   question,
   state,
   handleContinue,

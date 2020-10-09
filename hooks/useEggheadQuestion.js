@@ -2,7 +2,7 @@ import * as yup from 'yup'
 import {useFormik} from 'formik'
 
 export default function useEggheadQuestionMachine(question, handleSubmit) {
-  const {type} = question ? question : ''
+  const {type, value} = question ? question : ''
 
   function schemaFor(type) {
     switch (type) {
@@ -45,7 +45,8 @@ export default function useEggheadQuestionMachine(question, handleSubmit) {
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
-      value: '',
+      // "answered" state || new = fill out answer if it exists
+      value: question?.value || '',
     },
     validationSchema: schemaFor(type),
     onSubmit: (values, actions) => {

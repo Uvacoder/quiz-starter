@@ -8,6 +8,7 @@ import Markdown from '@/components/quiz/markdown'
 import SubmitAndContinue from '@/components/quiz/submitAndContinue'
 
 const Theater = ({
+  // formik,
   question,
   state,
   handleContinue,

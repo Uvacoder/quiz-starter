@@ -10,6 +10,7 @@ import Markdown from '@/components/quiz/markdown'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
 
 const MultipleChoice = ({
+  // formik,
   question,
   state,
   handleContinue,
@@ -70,7 +71,7 @@ const MultipleChoice = ({
             <SubmitAndContinue
               state={state}
               handleContinue={handleContinue}
-              isDisabled={state.matches('answering')}
+              isDisabled={state.matches('answering')} // todo: should align with isDisabled as it can be clicked in "answered" state
               isSubmitting={state.matches('answering')}
             />
           )}

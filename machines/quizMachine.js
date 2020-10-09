@@ -83,6 +83,10 @@ export const quizMachine = createMachine(
           },
         },
       },
+      hist: {
+        type: 'history',
+        history: 'shallow',
+      },
       failure: {
         always: [{target: 'idle'}], // todo
       },

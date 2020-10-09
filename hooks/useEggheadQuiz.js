@@ -2,6 +2,7 @@ import {useMachine} from '@xstate/react'
 import {quizMachine} from 'machines/quizMachine'
 import {first, indexOf, find, get} from 'lodash'
 import {useRouter} from 'next/router'
+import {scroller} from 'react-scroll'
 
 export default function useEggheadQuizMachine(quizId) {
   const [state, send] = useMachine(quizMachine, {
@@ -30,6 +31,11 @@ export default function useEggheadQuizMachine(quizId) {
       router.push(`/completed?quiz=${quizId}`)
     } else {
       send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
+      scroller.scrollTo(get(currentQuestion, 'id'), {
+        smooth: 'easeInOutQuint',
+        delay: 100,
+        duration: 1050,
+      })
     }
   }
   function handleSubmit(values, _actions) {

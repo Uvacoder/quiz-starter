@@ -9,6 +9,7 @@ import Continue from '@/components/quiz/continue'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
 
 const Essay = ({
+  // formik,
   question,
   state,
   handleContinue,
@@ -17,7 +18,8 @@ const Essay = ({
   currentAnswer,
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
-  const showExplanation = question.explanation && !state.matches('idle')
+  const showExplanation =
+    (question.explanation && !state.matches('idle')) || currentAnswer
 
   return (
     <QuizWrapper>
