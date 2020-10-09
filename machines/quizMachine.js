@@ -56,8 +56,8 @@ export const quizMachine = createMachine(
           src: (context, _event) => {
             const {answers, currentQuestionId} = context
             const answer = find(answers, {id: currentQuestionId})
-            // console.log({answer})
-            // return axios.post()
+            // I'm just faking a promise here
+            // could use axios.post() etc
             return new Promise((resolve, reject) => {
               if (true) {
                 setTimeout(() => resolve(), 800)
@@ -68,7 +68,7 @@ export const quizMachine = createMachine(
           },
 
           onDone: {target: 'answered'},
-          onError: {target: 'failure'},
+          onError: {target: 'failure'}, // todo
         },
       },
       answered: {
@@ -84,7 +84,7 @@ export const quizMachine = createMachine(
         },
       },
       failure: {
-        always: [{target: 'idle'}],
+        always: [{target: 'idle'}], // todo
       },
     },
   },

@@ -39,7 +39,7 @@ const Theater = ({
         <form className="flex flex-col" onSubmit={formik.handleSubmit}>
           <>
             {/* {answerOpened && question.explanation && question.explanation} */}
-            <div>Did you remember?</div>
+            <div className="text-lg font-semibold">Did you remember?</div>
             <div
               className="mt-4 grid grid-flow-col-dense gap-2"
               role="group"

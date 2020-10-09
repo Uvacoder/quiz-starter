@@ -28,8 +28,9 @@ export default function useEggheadQuizMachine(quizId) {
   function handleContinue() {
     if (currentQuestionIdx + 1 === questions.length) {
       router.push(`/completed?quiz=${quizId}`)
+    } else {
+      send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
     }
-    send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
   }
   function handleSubmit(values, _actions) {
     // const now = Date.now()

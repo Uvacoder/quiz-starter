@@ -31,7 +31,7 @@ const Essay = ({
           {currentAnswer ? (
             <>
               <div className="text-lg font-semibold">Your answer</div>
-              <Markdown className="p-3 font-semibold">
+              <Markdown className="p-3 mb-6 font-semibold">
                 {currentAnswer.value}
               </Markdown>
             </>
