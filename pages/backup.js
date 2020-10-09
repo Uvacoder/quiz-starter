@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
-// import {first, indexOf, find, get} from 'lodash'
-// import {useMachine} from '@xstate/react'
-// import {quizMachine} from 'machines/quizMachine'
+import {first, indexOf, find, get} from 'lodash'
+import {useMachine} from '@xstate/react'
+import {quizMachine} from 'machines/quizMachine'
 
 import MockData from 'data/quizzes'
 import {createServer} from 'miragejs'
@@ -16,17 +16,21 @@ createServer({
   },
 })
 
-export default function Home() {
-  const {
-    currentQuestion,
-    nextQuestionId,
-    handleContinue,
-    handleSubmit,
-    state,
-    send,
-  } = useEggheadQuizMachine(
-    'demo', // quiz slug
-  )
+export default function Backup() {
+  const [state, send] = useMachine(quizMachine, {
+    context: {
+      slug: 'demo',
+    },
+  })
+
+  const {questions, currentQuestionId} = state.context
+  const currentQuestion = questions && find(questions, {id: currentQuestionId})
+  const currentQuestionIdx = questions && indexOf(questions, currentQuestion)
+  const nextQuestionId =
+    questions &&
+    (currentQuestionIdx + 1 === questions.length
+      ? get(first(questions), 'id')
+      : get(questions[currentQuestionIdx + 1], 'id'))
 
   console.log(nextQuestionId)
 
@@ -51,7 +55,12 @@ export default function Home() {
                 {currentQuestion && currentQuestion.text}
               </div>
               {state.matches('answered') ? (
-                <button type="button" onClick={handleContinue}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
+                  }
+                >
                   continue
                 </button>
               ) : (
