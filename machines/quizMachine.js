@@ -8,7 +8,8 @@ export const quizMachine = createMachine(
     initial: 'initializing',
     context: {
       questions: null,
-      currentQuestionId: '1',
+      // currentQuestionId: '1',
+      currentQuestionId: null,
       answers: [],
       slug: null,
     },
@@ -28,6 +29,15 @@ export const quizMachine = createMachine(
                   'questions',
                 )
                 return questions
+              },
+              currentQuestionId: (context, event) => {
+                const {data} = event
+                const questions = get(
+                  first(filter(data, (quiz) => quiz.slug === context.slug)),
+                  'questions',
+                )
+                const firstQuestionId = get(first(questions), 'id')
+                return firstQuestionId
               },
             }),
           },

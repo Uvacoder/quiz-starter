@@ -12,8 +12,7 @@ const Theater = ({
   isDisabled,
   isAnswered,
 }) => {
-  const [answerOpened, setAnswerOpened] = React.useState(false)
-  const showExplanation = question.explanation && state.matches('answered')
+  const [showExplanation, setShowExplanation] = React.useState(false)
 
   return (
     <QuizWrapper>
@@ -21,66 +20,67 @@ const Theater = ({
         {isAnswered && state.matches('answered') && '✅'}
         {question.type}
         {question.text}
-        {showExplanation && <Explanation>{question.explanation}</Explanation>}
+        <button
+          onClick={() => setShowExplanation(!showExplanation)}
+          type="button"
+        >
+          {showExplanation ? 'hide explanation' : 'show explanation'}
+        </button>
+        {showExplanation && question.explanation && (
+          <Explanation>{question.explanation}</Explanation>
+        )}
       </QuestionWrapper>
       <AnswerWrapper>
         <form onSubmit={formik.handleSubmit}>
-          {answerOpened && (
-            <>
-              {/* {answerOpened && question.explanation && question.explanation} */}
-              <div role="group" aria-labelledby="choices">
-                <div>Did you remember?</div>
-                <label>
-                  <input
-                    disabled={isDisabled}
-                    type="radio"
-                    name="value"
-                    value={'0'}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    checked={formik.values.value === '0'}
-                  />
-                  No
-                </label>
-                <label>
-                  <input
-                    disabled={isDisabled}
-                    type="radio"
-                    name="value"
-                    value={'1'}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    checked={formik.values.value === '1'}
-                  />
-                  Almost
-                </label>
-                <label>
-                  <input
-                    disabled={isDisabled}
-                    type="radio"
-                    name="value"
-                    value={'2'}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    checked={formik.values.value === '2'}
-                  />
-                  Yes
-                </label>
-              </div>
-              {formik.errors.value}
-              {answerOpened && (
-                <button disabled={isDisabled} type="submit">
-                  submit
-                </button>
-              )}
-            </>
-          )}
+          <>
+            {/* {answerOpened && question.explanation && question.explanation} */}
+            <div role="group" aria-labelledby="choices">
+              <div>Did you remember?</div>
+              <label>
+                <input
+                  disabled={isDisabled}
+                  type="radio"
+                  name="value"
+                  value={'0'}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  checked={formik.values.value === '0'}
+                />
+                No
+              </label>
+              <label>
+                <input
+                  disabled={isDisabled}
+                  type="radio"
+                  name="value"
+                  value={'1'}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  checked={formik.values.value === '1'}
+                />
+                Almost
+              </label>
+              <label>
+                <input
+                  disabled={isDisabled}
+                  type="radio"
+                  name="value"
+                  value={'2'}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  checked={formik.values.value === '2'}
+                />
+                Yes
+              </label>
+            </div>
+            {formik.errors.value}
+
+            <button disabled={isDisabled} type="submit">
+              submit
+            </button>
+          </>
         </form>
-        {!answerOpened && (
-          <button onClick={() => setAnswerOpened(!answerOpened)} type="button">
-            {answerOpened ? 'hide answer' : 'show answer'}
-          </button>
-        )}
+
         {state.matches('answered') && (
           <button type="button" onClick={handleContinue}>
             continue

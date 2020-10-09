@@ -3,6 +3,9 @@ import QuestionWrapper from '@/components/quiz/questionWrapper'
 import AnswerWrapper from '@/components/quiz/answerWrapper'
 import Explanation from '@/components/quiz/explanation'
 import QuizWrapper from '@/components/quiz/wrapper'
+import Submit from '@/components/quiz/submit'
+import Continue from '@/components/quiz/continue'
+import SubmitAndContinue from '@/components/quiz/submitAndContinue'
 
 const MultipleChoice = ({
   formik,
@@ -26,7 +29,7 @@ const MultipleChoice = ({
         {showExplanation && <Explanation>{question.explanation}</Explanation>}
       </QuestionWrapper>
       <AnswerWrapper>
-        <form onSubmit={formik.handleSubmit}>
+        <form className="flex flex-col" onSubmit={formik.handleSubmit}>
           <div role="group" aria-labelledby="choices">
             {question.choices.map((choice) => {
               const correctAnswer = question.correctAnswer === choice.value
@@ -52,14 +55,23 @@ const MultipleChoice = ({
             })}
           </div>
           {formik.errors.value}
-          <button disabled={isDisabled} type="submit">
-            submit
-          </button>
+          {question.explanation ? (
+            <Submit
+              isDisabled={isDisabled}
+              isSubmitting={state.matches('answering')}
+            />
+          ) : (
+            <SubmitAndContinue
+              state={state}
+              handleContinue={handleContinue}
+              isDisabled={state.matches('answering')}
+              isSubmitting={state.matches('answering')}
+            />
+          )}
         </form>
-        {state.matches('answered') && (
-          <button type="button" onClick={handleContinue}>
-            continue
-          </button>
+
+        {state.matches('answered') && question.explanation && (
+          <Continue onClick={handleContinue} />
         )}
       </AnswerWrapper>
     </QuizWrapper>

@@ -3,6 +3,9 @@ import QuestionWrapper from '@/components/quiz/questionWrapper'
 import AnswerWrapper from '@/components/quiz/answerWrapper'
 import Explanation from '@/components/quiz/explanation'
 import QuizWrapper from '@/components/quiz/wrapper'
+import Markdown from '@/components/quiz/markdown'
+import Submit from '@/components/quiz/submit'
+import Continue from '@/components/quiz/continue'
 
 const Essay = ({
   formik,
@@ -10,24 +13,31 @@ const Essay = ({
   state,
   handleContinue,
   isDisabled,
-  isAnswered,
+  currentAnswer,
 }) => {
-  const showExplanation = question.explanation && state.matches('answered')
+  const showExplanation = question.explanation && !state.matches('idle')
 
   return (
     <QuizWrapper>
       <QuestionWrapper>
-        {isAnswered && state.matches('answered') && '✅'}
-        {question.type}
-        {question.text}
+        {/* {question.type} */}
+        <Markdown>{question.text}</Markdown>
         {showExplanation && <Explanation>{question.explanation}</Explanation>}
       </QuestionWrapper>
       <AnswerWrapper>
-        <form onSubmit={formik.handleSubmit}>
-          <div>
-            <label>
-              Your answer
+        <form className="flex flex-col" onSubmit={formik.handleSubmit}>
+          {currentAnswer ? (
+            <>
+              ✓ Your answer
+              <Markdown className="p-3 font-semibold">
+                {currentAnswer.value}
+              </Markdown>
+            </>
+          ) : (
+            <>
+              <label htmlFor="value">Your answer</label>
               <textarea
+                className="w-full p-3 bg-gray-100"
                 disabled={isDisabled}
                 name="value"
                 placeholder="Type your answer here..."
@@ -35,21 +45,15 @@ const Essay = ({
                 onBlur={formik.handleBlur}
                 value={formik.values.value}
               />
-            </label>
-            {formik.submitCount > 0 && formik.errors.value}
-          </div>
-          {!isDisabled && (
-            <button disabled={isDisabled} type="submit">
-              submit
-            </button>
+            </>
           )}
-          {state.matches('answering') && 'submitting...'}
+          {formik.submitCount > 0 && formik.errors.value}
+          <Submit
+            isDisabled={isDisabled}
+            isSubmitting={state.matches('answering')}
+          />
         </form>
-        {state.matches('answered') && (
-          <button type="button" onClick={handleContinue}>
-            continue
-          </button>
-        )}
+        {state.matches('answered') && <Continue onClick={handleContinue} />}
       </AnswerWrapper>
     </QuizWrapper>
   )

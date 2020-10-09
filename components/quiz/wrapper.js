@@ -1,3 +1,5 @@
 export default function Wrapper({children}) {
-  return <div>{children}</div>
+  return (
+    <div className="grid grid-cols-5 w-full max-w-screen-lg">{children}</div>
+  )
 }

@@ -1,8 +1,9 @@
+import {get} from 'lodash'
 import {MultipleChoice, Essay, Theater, Sketch} from 'components/quiz'
 
 export default function QuestionToShow({question, ...props}) {
   let QuestionToShow
-  switch (question.type) {
+  switch (get(question, 'type')) {
     case 'multiple-choice':
       QuestionToShow = MultipleChoice
       break

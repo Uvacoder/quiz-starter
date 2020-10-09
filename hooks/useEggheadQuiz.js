@@ -1,56 +1,48 @@
-import React from 'react'
-import {findIndex, find, isEmpty} from 'lodash'
-import {useLocalStorage} from 'react-use'
+import {useMachine} from '@xstate/react'
+import {quizMachine} from 'machines/quizMachine'
+import {first, indexOf, find, get} from 'lodash'
 
-export default function useEggheadQuiz(quiz) {
-  const {questions} = quiz
-  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
+export default function useEggheadQuizMachine(slug) {
+  const [state, send] = useMachine(quizMachine, {
+    context: {
+      slug: slug, // quiz identifier (slug or id)
+    },
+  })
 
-  const [completedQuestions, setCompleted, resetCompleted] = useLocalStorage(
-    quiz.id,
-    [],
-  )
+  const {questions, currentQuestionId, answers} = state.context
+  const currentQuestion = questions && find(questions, {id: currentQuestionId})
+  const currentQuestionIdx = questions && indexOf(questions, currentQuestion)
+  const nextQuestionId =
+    questions &&
+    (currentQuestionIdx + 1 === questions.length
+      ? get(first(questions), 'id')
+      : get(questions[currentQuestionIdx + 1], 'id'))
+  const isCurrentQuestionAnswered = find(state.context.answers, {
+    id: currentQuestionId,
+  })
+  const currentAnswer = find(answers, {id: currentQuestionId})
+  const isDisabled = state.matches('answering') || state.matches('answered')
 
-  function isCompleted(question) {
-    return !isEmpty(find(completedQuestions, {id: question.id}))
+  function handleContinue() {
+    send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
   }
-
-  function markCompleted(question) {
-    !isCompleted(question) && setCompleted([question, ...completedQuestions])
-  }
-
-  function resetQuizProgress(condition = true) {
-    if (condition) {
-      resetCompleted()
-      window.location.reload()
-    } else return null
-  }
-
-  function onSubmit(values, actions, question) {
+  function handleSubmit(values, actions) {
     const now = Date.now()
     const date = new Date(now).toUTCString()
-    const context = {quizId: quiz.id, questionId: question.id, date}
-    const response = {...values, question, context}
-    console.log({response})
-    window.alert(JSON.stringify(response, null, 2))
-    markCompleted(question)
-  }
-
-  function questionIndex(question) {
-    findIndex(questions, {id: question.id})
-  }
-
-  function nextQuestion(question) {
-    const currentQuestionIndex = findIndex(questions, {id: question.id})
-    return questions[currentQuestionIndex + 1]
+    // const context = {quizId: quiz.id, questionId: question.id, date}
+    // const response = {...values, question, context}
+    send('SUBMIT', {answer: {...values, ...currentQuestion}})
   }
 
   return {
-    questions,
-    nextQuestion,
-    questionIndex,
-    onSubmit,
-    resetQuizProgress,
-    isCompleted,
+    currentQuestion,
+    nextQuestionId,
+    state,
+    send,
+    handleContinue,
+    handleSubmit,
+    isDisabled,
+    isCurrentQuestionAnswered,
+    currentAnswer,
   }
 }

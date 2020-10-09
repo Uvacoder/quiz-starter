@@ -4,36 +4,40 @@ export default {
   version: '1.0.0',
   questions: [
     {
-      id: '1',
+      id: '10',
       version: '1.0.0',
       type: 'essay',
-      text: 'What do you think about this?',
+      text: `# What happens if we run this code?
+      \n Is this code valid? Why or why not?
+      \n <pre>
+let numberOfTentacles = 10;
+numberOfTentacles = 'eight';
+console.log(typeof(numberOfTentacles));</pre>`,
       explanation: 'Explanation lorem ipsum dolor sit amet.',
     },
     {
-      id: '2',
+      id: '20',
       version: '1.0.0',
       type: 'multiple-choice',
-      text:
-        'This quizzing system supports 4 different question types. It can also validate them. Pick one:',
+      text: 'How long have you been programming?',
       choices: [
-        {value: 'first', text: 'Open Ended'},
-        {value: 'second', text: 'Multiple Choice'},
-        {value: 'third', text: 'Sketch'},
-        {value: 'fourth', text: 'Theater of Mind'},
+        {value: '0-2', text: '0–2 years'},
+        {value: '2-5', text: '2–5 years'},
+        {value: '5-10', text: '5–10 years'},
+        {value: '10-more', text: 'more than 10 years'},
       ],
-      correctAnswer: 'first',
-      explanation: 'Explanation lorem ipsum dolor sit amet.',
+      // correctAnswer: 'first',
+      // explanation: 'Explanation lorem ipsum dolor sit amet.',
     },
     {
-      id: '3',
+      id: '30',
       version: '1.0.0',
       type: 'theater',
       text: 'Lorem ipsum dolor sit amet?',
       explanation: 'Explanation lorem ipsum dolor sit amet.',
     },
     {
-      id: '8',
+      id: '40',
       version: '1.0.0',
       type: 'sketch',
       text: 'Sketch a diagram of your JavaScript Universe.',

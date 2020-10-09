@@ -4,8 +4,8 @@ import QuestionToShow from 'components/quiz/questionToShow'
 import MockData from 'data/quizzes'
 import {createServer} from 'miragejs'
 
-import useEggheadQuizMachine from 'hooks/useEggheadQuizMachine'
-import useEggheadQuestionMachine from 'hooks/useEggheadQuestionMachine'
+import useEggheadQuizMachine from '@/hooks/useEggheadQuiz'
+import useEggheadQuestionMachine from '@/hooks/useEggheadQuestion'
 
 createServer({
   routes() {
@@ -18,16 +18,18 @@ export default function Home() {
   const {
     state,
     currentQuestion,
-    nextQuestionId,
     handleContinue,
     handleSubmit,
-    isCurrentQuestionAnswered,
     isDisabled,
+    currentAnswer,
+    nextQuestionId,
+    isCurrentQuestionAnswered,
   } = useEggheadQuizMachine(
     'demo', // quiz identifier (slug or id)
   )
 
   const {formik} = useEggheadQuestionMachine(currentQuestion, handleSubmit)
+
   // useEggheadQuizProgress()
 
   console.log(state)
@@ -38,21 +40,19 @@ export default function Home() {
         <title>Quiz Demo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <div>
-          {state.matches('initializing') ? (
-            'loading...'
-          ) : (
-            <QuestionToShow
-              state={state}
-              question={currentQuestion}
-              formik={formik}
-              handleContinue={handleContinue}
-              isAnswered={isCurrentQuestionAnswered}
-              isDisabled={isDisabled}
-            />
-          )}
-        </div>
+      <main className="flex justify-center min-h-screen w-full md:py-32 py-0">
+        {state.matches('initializing') ? (
+          'loading...'
+        ) : (
+          <QuestionToShow
+            state={state}
+            question={currentQuestion}
+            formik={formik}
+            handleContinue={handleContinue}
+            currentAnswer={currentAnswer}
+            isDisabled={isDisabled}
+          />
+        )}
       </main>
     </>
   )
