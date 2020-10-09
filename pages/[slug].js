@@ -1,7 +1,7 @@
 import React from 'react'
 import {get, find} from 'lodash'
 import Quizzes from 'data/quizzes'
-import QuizTemplate from 'components/quiz'
+import QuizTemplate from '@/components/quiz/oldQuiz'
 
 function Quiz({quiz}) {
   return (

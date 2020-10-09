@@ -1,8 +1,5 @@
 import Head from 'next/head'
-import Link from 'next/link'
-// import {first, indexOf, find, get} from 'lodash'
-// import {useMachine} from '@xstate/react'
-// import {quizMachine} from 'machines/quizMachine'
+import QuestionToShow from 'components/quiz/questionToShow'
 
 import MockData from 'data/quizzes'
 import {createServer} from 'miragejs'
@@ -19,22 +16,24 @@ createServer({
 
 export default function Home() {
   const {
+    state,
     currentQuestion,
     nextQuestionId,
     handleContinue,
     handleSubmit,
-    state,
+    isCurrentQuestionAnswered,
+    isDisabled,
   } = useEggheadQuizMachine(
     'demo', // quiz identifier (slug or id)
   )
 
   const {formik} = useEggheadQuestionMachine(currentQuestion, handleSubmit)
+  // useEggheadQuizProgress()
 
-  console.log(nextQuestionId)
   console.log(state)
 
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Quiz Demo</title>
         <link rel="icon" href="/favicon.ico" />
@@ -44,46 +43,17 @@ export default function Home() {
           {state.matches('initializing') ? (
             'loading...'
           ) : (
-            <>
-              <form onSubmit={formik.handleSubmit}>
-                <div>
-                  {/* {questions.map((question) => (
-                <div key={question.id}>{question.text}</div>
-              ))} */}
-                  {currentQuestion && currentQuestion.text}
-                  <label>
-                    Your answer
-                    <textarea
-                      // disabled={isSubmitted}
-                      name="value"
-                      placeholder="Type your answer here..."
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.value}
-                    />
-                  </label>
-                </div>
-                {!state.matches('answered') && (
-                  <button type="submit">submit</button>
-                )}
-              </form>
-              {state.matches('answered') && (
-                <button type="button" onClick={handleContinue}>
-                  continue
-                </button>
-              )}
-            </>
+            <QuestionToShow
+              state={state}
+              question={currentQuestion}
+              formik={formik}
+              handleContinue={handleContinue}
+              isAnswered={isCurrentQuestionAnswered}
+              isDisabled={isDisabled}
+            />
           )}
         </div>
-        {/* <div style={{opacity: 0.2}}>
-          <Link href={'/[slug]'} as="/demo">
-            <a>
-              <h3>Quiz Demo</h3>
-            </a>
-          </Link>
-          <button onClick={() => send('START_QUIZ')}>Start</button>
-        </div> */}
       </main>
-    </div>
+    </>
   )
 }

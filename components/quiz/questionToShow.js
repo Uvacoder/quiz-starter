@@ -1,8 +1,8 @@
-import {MultipleChoice, Essay, Theater, Sketch} from './'
+import {MultipleChoice, Essay, Theater, Sketch} from 'components/quiz'
 
 export default function QuestionToShow({question, ...props}) {
   let QuestionToShow
-  switch (type) {
+  switch (question.type) {
     case 'multiple-choice':
       QuestionToShow = MultipleChoice
       break
@@ -21,5 +21,5 @@ export default function QuestionToShow({question, ...props}) {
     default:
       return null
   }
-  return <QuestionToShow type={question && question.type} {...props} />
+  return <QuestionToShow question={question} {...props} />
 }
