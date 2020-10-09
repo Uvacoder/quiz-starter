@@ -1,11 +1,12 @@
 import {useMachine} from '@xstate/react'
 import {quizMachine} from 'machines/quizMachine'
 import {first, indexOf, find, get} from 'lodash'
+import {useRouter} from 'next/router'
 
-export default function useEggheadQuizMachine(slug) {
+export default function useEggheadQuizMachine(quizId) {
   const [state, send] = useMachine(quizMachine, {
     context: {
-      slug: slug, // quiz identifier (slug or id)
+      quizId: quizId,
     },
   })
 
@@ -15,7 +16,7 @@ export default function useEggheadQuizMachine(slug) {
   const nextQuestionId =
     questions &&
     (currentQuestionIdx + 1 === questions.length
-      ? get(first(questions), 'id')
+      ? get(first(questions), 'id') // go back to first question
       : get(questions[currentQuestionIdx + 1], 'id'))
   const isCurrentQuestionAnswered = find(state.context.answers, {
     id: currentQuestionId,
@@ -23,7 +24,11 @@ export default function useEggheadQuizMachine(slug) {
   const currentAnswer = find(answers, {id: currentQuestionId})
   const isDisabled = state.matches('answering') || state.matches('answered')
 
+  const router = useRouter()
   function handleContinue() {
+    if (currentQuestionIdx + 1 === questions.length) {
+      router.push(`/completed?quiz=${quizId}`)
+    }
     send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
   }
   function handleSubmit(values, actions) {

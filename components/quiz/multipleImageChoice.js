@@ -15,7 +15,7 @@ const MultipleImageChoice = ({
   handleContinue,
   handleSubmit,
   isDisabled,
-  isAnswered,
+  currentAnswer,
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
   const hasAnsweredCorrectly = question.correctAnswer === formik.values.value
@@ -24,10 +24,11 @@ const MultipleImageChoice = ({
   return (
     <QuizWrapper>
       <QuestionWrapper>
-        {isAnswered && state.matches('answered') && (
+        {/* {currentAnswer && state.matches('answered') && (
           <span>{hasAnsweredCorrectly ? '✅' : '❎'}</span>
-        )}
+        )} */}
         {question.type}
+        {showExplanation && <Explanation>{question.explanation}</Explanation>}
         <Markdown>{question.text}</Markdown>
         <form onSubmit={formik.handleSubmit}>
           <div
@@ -50,50 +51,26 @@ const MultipleImageChoice = ({
                       checked={formik.values.value === choice.value}
                       className="mr-1"
                     />
-                    {choice.text}
+                    {choice.text}{' '}
+                    {currentAnswer &&
+                      state.matches('answered') &&
+                      (correctAnswer ? '✅' : '❌')}
                     <img
                       src={choice.image}
                       alt={choice.text}
                       className="border border-gray-200"
                     />
-
-                    {isAnswered &&
-                      state.matches('answered') &&
-                      (correctAnswer ? ' (correct)' : ' (incorrect)')}
                   </label>
                 </div>
               )
             })}
           </div>
         </form>
-        {/* {question.choices && (
-          <div className="grid gap-4 grid-cols-2 py-4">
-            {question.choices.map((choice) => {
-              const correctAnswer = question.correctAnswer === choice.value
-              const selected = formik.values.value === choice.value
-              return (
-                <div
-                  key={choice.value}
-                  className={`border-2 ${
-                    selected ? 'border-blue-500' : 'border-transparent'
-                  }`}
-                >
-                  {selected && '⦿'} {choice.text}
-                  <img
-                    src={choice.image}
-                    alt={choice.text}
-                    className="border border-gray-200"
-                  />
-                </div>
-              )
-            })}
-          </div>
-        )} */}
-        {showExplanation && <Explanation>{question.explanation}</Explanation>}
       </QuestionWrapper>
       <AnswerWrapper>
         <form className="flex flex-col" onSubmit={formik.handleSubmit}>
           <div role="group" aria-labelledby="choices">
+            <div className="text-lg font-semibold">Your answer</div>
             {question.choices.map((choice) => {
               const correctAnswer = question.correctAnswer === choice.value
               return (
@@ -109,20 +86,21 @@ const MultipleImageChoice = ({
                       checked={formik.values.value === choice.value}
                       className="mr-1"
                     />
-                    {choice.text}
-                    {isAnswered &&
+                    {choice.text}{' '}
+                    {currentAnswer &&
                       state.matches('answered') &&
-                      (correctAnswer ? ' (correct)' : ' (incorrect)')}
+                      (correctAnswer ? '✅' : '❌')}
                   </label>
                 </div>
               )
             })}
           </div>
           {formik.errors.value}
-          {question.explanation ? (
+          {question.explanation || question.correctAnswer ? (
             <Submit
               isDisabled={isDisabled}
               isSubmitting={state.matches('answering')}
+              explanation={question.explanation}
             />
           ) : (
             <SubmitAndContinue
@@ -134,9 +112,16 @@ const MultipleImageChoice = ({
           )}
         </form>
 
-        {state.matches('answered') && question.explanation && (
-          <Continue onClick={handleContinue} />
+        {state.matches('answered') && (
+          <div className="pt-4 font-semibold">
+            {hasAnsweredCorrectly ? '🎉 Correct!' : 'Incorrect'}
+          </div>
         )}
+
+        {state.matches('answered') &&
+          (question.explanation || question.correctAnswer) && (
+            <Continue onClick={handleContinue} />
+          )}
       </AnswerWrapper>
     </QuizWrapper>
   )

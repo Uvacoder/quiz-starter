@@ -1,4 +1,8 @@
-export default function Submit({isDisabled, isSubmitting}) {
+export default function Submit({
+  isDisabled,
+  isSubmitting,
+  explanation = false,
+}) {
   if (isDisabled && !isSubmitting) {
     return null
   }
@@ -8,7 +12,9 @@ export default function Submit({isDisabled, isSubmitting}) {
       type="submit"
       disabled={isDisabled}
     >
-      {isSubmitting ? 'Submitting...' : 'Submit'}
+      {isSubmitting
+        ? 'Submitting...'
+        : `Submit ${explanation && 'and show explanation'}`}
     </button>
   )
 }

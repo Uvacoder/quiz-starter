@@ -1,11 +1,8 @@
 import Head from 'next/head'
-import QuestionToShow from 'components/quiz/questionToShow'
-
 import MockData from 'data/quizzes'
 import {createServer} from 'miragejs'
-
-import useEggheadQuizMachine from '@/hooks/useEggheadQuiz'
-import useEggheadQuestionMachine from '@/hooks/useEggheadQuestion'
+import useEggheadQuiz from '@/hooks/useEggheadQuiz'
+import QuestionToShow from 'components/quiz/questionToShow'
 
 createServer({
   routes() {
@@ -24,13 +21,9 @@ export default function Home() {
     currentAnswer,
     nextQuestionId,
     isCurrentQuestionAnswered,
-  } = useEggheadQuizMachine(
-    'demo', // quiz identifier (slug or id)
+  } = useEggheadQuiz(
+    'demo', // quiz id
   )
-
-  // const {formik} = useEggheadQuestionMachine(currentQuestion, handleSubmit)
-
-  // useEggheadQuizProgress()
 
   console.log(state)
 

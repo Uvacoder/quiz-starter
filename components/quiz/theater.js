@@ -4,6 +4,9 @@ import AnswerWrapper from '@/components/quiz/answerWrapper'
 import Explanation from '@/components/quiz/explanation'
 import QuizWrapper from '@/components/quiz/wrapper'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
+import SubmitAndContinue from '@/components/quiz/submitAndContinue'
+import Submit from '@/components/quiz/submit'
+import Continue from '@/components/quiz/continue'
 
 const Theater = ({
   question,
@@ -14,7 +17,7 @@ const Theater = ({
   isAnswered,
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
-  const [showExplanation, setShowExplanation] = React.useState(false)
+  // const [showExplanation, setShowExplanation] = React.useState(false)
 
   return (
     <QuizWrapper>
@@ -22,18 +25,18 @@ const Theater = ({
         {isAnswered && state.matches('answered') && '✅'}
         {question.type}
         {question.text}
-        <button
+        {/* <button
           onClick={() => setShowExplanation(!showExplanation)}
           type="button"
         >
           {showExplanation ? 'hide explanation' : 'show explanation'}
-        </button>
-        {showExplanation && question.explanation && (
+        </button> */}
+        {state.matches('answered') && question.explanation && (
           <Explanation>{question.explanation}</Explanation>
         )}
       </QuestionWrapper>
       <AnswerWrapper>
-        <form onSubmit={formik.handleSubmit}>
+        <form className="flex flex-col" onSubmit={formik.handleSubmit}>
           <>
             {/* {answerOpened && question.explanation && question.explanation} */}
             <div role="group" aria-labelledby="choices">
@@ -77,17 +80,25 @@ const Theater = ({
             </div>
             {formik.errors.value}
 
-            <button disabled={isDisabled} type="submit">
-              submit
-            </button>
+            <Submit
+              isDisabled={isDisabled}
+              isSubmitting={state.matches('answering')}
+              explanation={question.explanation}
+            />
           </>
         </form>
-
-        {state.matches('answered') && (
-          <button type="button" onClick={handleContinue}>
-            continue
-          </button>
-        )}
+        {state.matches('answered') &&
+          (question.explanation || question.correctAnswer) && (
+            <Continue onClick={handleContinue} />
+          )}
+        {/* {state.matches('answered') && (
+          <SubmitAndContinue
+            state={state}
+            handleContinue={handleContinue}
+            isDisabled={state.matches('answering')}
+            isSubmitting={state.matches('answering')}
+          />
+        )} */}
       </AnswerWrapper>
     </QuizWrapper>
   )

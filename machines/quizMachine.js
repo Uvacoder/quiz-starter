@@ -6,12 +6,12 @@ export const quizMachine = createMachine(
   {
     id: 'quiz',
     initial: 'initializing',
+    title: 'Demo Quiz',
     context: {
       questions: null,
-      // currentQuestionId: '1',
       currentQuestionId: null,
       answers: [],
-      slug: null,
+      quizId: null,
     },
     states: {
       initializing: {
@@ -25,7 +25,7 @@ export const quizMachine = createMachine(
                 const {data} = event
                 console.log({data})
                 const questions = get(
-                  first(filter(data, (quiz) => quiz.slug === context.slug)),
+                  first(filter(data, (quiz) => quiz.id === context.quizId)),
                   'questions',
                 )
                 return questions
@@ -33,7 +33,7 @@ export const quizMachine = createMachine(
               currentQuestionId: (context, event) => {
                 const {data} = event
                 const questions = get(
-                  first(filter(data, (quiz) => quiz.slug === context.slug)),
+                  first(filter(data, (quiz) => quiz.id === context.quizId)),
                   'questions',
                 )
                 const firstQuestionId = get(first(questions), 'id')
@@ -60,11 +60,10 @@ export const quizMachine = createMachine(
       answering: {
         invoke: {
           id: 'postingAnswer',
-          src: (context, event) => {
+          src: (context, _event) => {
             const {answers, currentQuestionId} = context
             const answer = find(answers, {id: currentQuestionId})
-            console.log({answer})
-
+            // console.log({answer})
             // return axios.post()
             return new Promise((resolve, reject) => {
               if (true) {
@@ -103,7 +102,7 @@ export const quizMachine = createMachine(
       },
     },
     services: {
-      fetchQuizData: (ctx) => fetchQuizData(ctx.slug),
+      fetchQuizData: (ctx) => fetchQuizData(ctx.quizId),
     },
   },
 )

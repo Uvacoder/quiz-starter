@@ -19,21 +19,25 @@ console.log(typeof(numberOfTentacles));</pre>`,
       id: '20',
       version: '1.0.0',
       type: 'multiple-choice',
-      text: 'How long have you been programming?',
+      text: `# How long have you been programming?`,
       choices: [
         {value: '0-2', text: '0–2 years'},
         {value: '2-5', text: '2–5 years'},
         {value: '5-10', text: '5–10 years'},
         {value: '10-more', text: 'more than 10 years'},
       ],
-      // correctAnswer: 'first',
+      // correctAnswer: '0-2',
       // explanation: 'Explanation lorem ipsum dolor sit amet.',
     },
     {
       id: '30',
       version: '1.0.0',
       type: 'multiple-image-choice',
-      text: `# Which one of these diagrams best matches your sketch and our mental model after that code runs?`,
+      text: `# Which one of these diagrams best matches your sketch and our mental model after following code runs?
+<pre>let fingernails = 'mustache';
+let toes = fingernails;
+let nose = 'must' + 'ache';
+</pre>`,
       choices: [
         {
           value: 'a',
@@ -70,11 +74,11 @@ console.log(typeof(numberOfTentacles));</pre>`,
       text: 'Lorem ipsum dolor sit amet?',
       explanation: 'Explanation lorem ipsum dolor sit amet.',
     },
-    {
-      id: '50',
-      version: '1.0.0',
-      type: 'sketch',
-      text: 'Sketch a diagram of your JavaScript Universe.',
-    },
+    // {
+    //   id: '50',
+    //   version: '1.0.0',
+    //   type: 'sketch',
+    //   text: 'Sketch a diagram of your JavaScript Universe.',
+    // },
   ],
 }

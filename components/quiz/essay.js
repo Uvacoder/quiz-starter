@@ -22,22 +22,24 @@ const Essay = ({
   return (
     <QuizWrapper>
       <QuestionWrapper>
-        {/* {question.type} */}
-        <Markdown>{question.text}</Markdown>
+        {question.type}
         {showExplanation && <Explanation>{question.explanation}</Explanation>}
+        <Markdown>{question.text}</Markdown>
       </QuestionWrapper>
       <AnswerWrapper>
         <form className="flex flex-col" onSubmit={formik.handleSubmit}>
           {currentAnswer ? (
             <>
-              ✓ Your answer
+              <div className="text-lg font-semibold">Your answer</div>
               <Markdown className="p-3 font-semibold">
                 {currentAnswer.value}
               </Markdown>
             </>
           ) : (
             <>
-              <label htmlFor="value">Your answer</label>
+              <label className="text-lg font-semibold" htmlFor="value">
+                Your answer
+              </label>
               <textarea
                 className="w-full p-3 bg-gray-100"
                 disabled={isDisabled}
@@ -53,6 +55,7 @@ const Essay = ({
           <Submit
             isDisabled={isDisabled}
             isSubmitting={state.matches('answering')}
+            explanation={question.explanation}
           />
         </form>
         {state.matches('answered') && <Continue onClick={handleContinue} />}
