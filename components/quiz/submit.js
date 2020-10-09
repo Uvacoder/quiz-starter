@@ -14,7 +14,7 @@ export default function Submit({
     >
       {isSubmitting
         ? 'Submitting...'
-        : `Submit ${explanation && 'and show explanation'}`}
+        : `Submit ${explanation ? 'and show explanation' : ''}`}
     </button>
   )
 }

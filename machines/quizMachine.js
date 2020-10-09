@@ -60,7 +60,7 @@ export const quizMachine = createMachine(
             // return axios.post()
             return new Promise((resolve, reject) => {
               if (true) {
-                setTimeout(() => resolve(), 1000)
+                setTimeout(() => resolve(), 800)
               } else {
                 reject()
               }

@@ -4,7 +4,7 @@ import AnswerWrapper from '@/components/quiz/answerWrapper'
 import Explanation from '@/components/quiz/explanation'
 import QuizWrapper from '@/components/quiz/wrapper'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
-import SubmitAndContinue from '@/components/quiz/submitAndContinue'
+import Markdown from '@/components/quiz/markdown'
 import Submit from '@/components/quiz/submit'
 import Continue from '@/components/quiz/continue'
 
@@ -24,7 +24,7 @@ const Theater = ({
       <QuestionWrapper>
         {isAnswered && state.matches('answered') && '✅'}
         {question.type}
-        {question.text}
+        <Markdown>{question.text}</Markdown>
         {/* <button
           onClick={() => setShowExplanation(!showExplanation)}
           type="button"
@@ -39,8 +39,12 @@ const Theater = ({
         <form className="flex flex-col" onSubmit={formik.handleSubmit}>
           <>
             {/* {answerOpened && question.explanation && question.explanation} */}
-            <div role="group" aria-labelledby="choices">
-              <div>Did you remember?</div>
+            <div>Did you remember?</div>
+            <div
+              className="mt-4 grid grid-flow-col-dense gap-2"
+              role="group"
+              aria-labelledby="choices"
+            >
               <label>
                 <input
                   disabled={isDisabled}
@@ -50,6 +54,7 @@ const Theater = ({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   checked={formik.values.value === '0'}
+                  className="mr-1"
                 />
                 No
               </label>
@@ -62,6 +67,7 @@ const Theater = ({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   checked={formik.values.value === '1'}
+                  className="mr-1"
                 />
                 Almost
               </label>
@@ -74,12 +80,12 @@ const Theater = ({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   checked={formik.values.value === '2'}
+                  className="mr-1"
                 />
                 Yes
               </label>
             </div>
             {formik.errors.value}
-
             <Submit
               isDisabled={isDisabled}
               isSubmitting={state.matches('answering')}
@@ -87,10 +93,7 @@ const Theater = ({
             />
           </>
         </form>
-        {state.matches('answered') &&
-          (question.explanation || question.correctAnswer) && (
-            <Continue onClick={handleContinue} />
-          )}
+        {state.matches('answered') && <Continue onClick={handleContinue} />}
         {/* {state.matches('answered') && (
           <SubmitAndContinue
             state={state}

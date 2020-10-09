@@ -19,7 +19,8 @@ console.log(typeof(numberOfTentacles));</pre>`,
       id: '20',
       version: '1.0.0',
       type: 'multiple-choice',
-      text: `# How long have you been programming?`,
+      text: `# How long have you been programming?
+\n <img src="https://media.giphy.com/media/QuIxFwQo0RMT1tASlV/giphy.gif" alt="silly gif" />`,
       choices: [
         {value: '0-2', text: '0–2 years'},
         {value: '2-5', text: '2–5 years'},
@@ -70,12 +71,26 @@ let nose = 'must' + 'ache';
     {
       id: '40',
       version: '1.0.0',
+      type: 'essay',
+      text: `# Can you figure out the three lines of code necessary to swap the values of the surname properties of these two objects?
+\n If you get stuck and your physical form allows that, take something large into each hand and then try to swap the items in your hands. You might find it difficult unless you put one of them somewhere temporarily. Hint: in code, that "somewhere" can be a variable.
+\n `,
+      explanation: `# Answer: see one possible solution below.
+\n Our problem is that we can't point two wires to different values in one line. We can only change where one of them points at a time.
+\n However, we can introduce a variable to "hold onto" the value of one of those wires. Then we can change where that wire points to without "forgetting" where the other wire needs to be pointed.
+\n This is similar to how in order to swap two things in your hands, you can give the first thing to your friend to hold, put the second thing in the first hand, and then take the first thing back from your friend.
+\n If you're still confused, you can sketch out this example step by step.
+\n <img src="https://images.typeform.com/images/cb6W3gafYsbq/image/default" alt="" />`,
+    },
+    {
+      id: '50',
+      version: '1.0.0',
       type: 'theater',
-      text: 'Lorem ipsum dolor sit amet?',
-      explanation: 'Explanation lorem ipsum dolor sit amet.',
+      text: `# Lorem Ipsum Dolor Sit Amet`,
+      explanation: `It is what it is.`,
     },
     // {
-    //   id: '50',
+    //   id: '60',
     //   version: '1.0.0',
     //   type: 'sketch',
     //   text: 'Sketch a diagram of your JavaScript Universe.',
