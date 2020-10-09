@@ -26,8 +26,11 @@ export default function Completed() {
         <title>Quiz Completed</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex items-center text-center justify-center min-h-screen w-full text-xl">
-        {quiz?.id} quiz completed 🙌
+      <main className="flex flex-col items-center text-center justify-center min-h-screen w-full text-xl">
+        <span className="block text-4xl" role="img" aria-label="high-fife">
+          🙌
+        </span>
+        Completed {quiz?.title}
       </main>
     </>
   )

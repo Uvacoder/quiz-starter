@@ -1,6 +1,7 @@
 export default {
   id: 'demo',
   slug: 'demo',
+  title: 'Demo Quiz',
   version: '1.0.0',
   questions: [
     {
