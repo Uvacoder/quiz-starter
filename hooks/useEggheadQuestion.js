@@ -1,14 +1,17 @@
-import React from 'react'
 import * as yup from 'yup'
 import {useFormik} from 'formik'
 
-export default function useEggheadQuestion(question, onSubmit, quizId) {
-  const {type, text, explanation, choices, correctAnswer} = question
-  const [isSubmitted, setSubmitted] = React.useState(false)
+export default function useEggheadQuestionMachine(question, handleSubmit) {
+  const {type} = question ? question : ''
 
   function schemaFor(type) {
     switch (type) {
       case 'multiple-choice':
+        return yup.object().shape({
+          value: yup.string().required('Pick one.').nullable(),
+        })
+
+      case 'multiple-image-choice':
         return yup.object().shape({
           value: yup.string().required('Pick one.').nullable(),
         })
@@ -47,11 +50,10 @@ export default function useEggheadQuestion(question, onSubmit, quizId) {
     validationSchema: schemaFor(type),
     onSubmit: (values, actions) => {
       if (formik.isValid) {
-        onSubmit(values, actions, question)
-        setSubmitted(true)
+        handleSubmit(values, actions, question)
       }
     },
   })
 
-  return {formik, isSubmitted}
+  return {formik}
 }
