@@ -1,5 +1,5 @@
 import {createMachine, assign} from 'xstate'
-import {get, first, filter, isEmpty} from 'lodash'
+import {get, find, first, filter, isEmpty} from 'lodash'
 import {fetchQuizData} from 'utils/fetchQuizData'
 
 export const quizMachine = createMachine(
@@ -47,25 +47,36 @@ export const quizMachine = createMachine(
             actions: assign({
               answers: (context, event) => {
                 const {answers} = context
-                return [...answers, event.answer]
+                return [...answers, event]
               },
             }),
           },
         },
       },
       answering: {
-        // invoke: {
-        //   id: 'postingAnswer',
-        //   src: (context, event) => {
-        //     const {answers, currentQuestionId} = context
-        //     // find(answers, {questionId: currentQuestionId})
-        //     // return axios.post()
-        //     return event
-        //   },
-        //   onDone: {target: 'answered'},
-        //   onError: {target: 'failure'},
-        // },
-        on: {'': [{target: 'answered'}]},
+        invoke: {
+          id: 'postingAnswer',
+          src: (context, event) => {
+            const {answers, currentQuestionId} = context
+            const answer = get(
+              find(answers, {question: {id: currentQuestionId}}),
+              'answer',
+            )
+            console.log({answer})
+
+            // return axios.post()
+            return new Promise((resolve, reject) => {
+              if (true) {
+                resolve()
+              } else {
+                reject()
+              }
+            })
+          },
+          onDone: {target: 'answered'},
+          onError: {target: 'failure'},
+        },
+        // on: {'': [{target: 'answered'}]},
       },
       answered: {
         on: {
@@ -78,6 +89,9 @@ export const quizMachine = createMachine(
             }),
           },
         },
+      },
+      failure: {
+        always: [{target: 'idle'}],
       },
     },
   },

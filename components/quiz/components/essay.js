@@ -11,7 +11,7 @@ const Essay = ({question, onSubmit, isCompleted}) => {
       </h4>
       <p>{question.text}</p>
       <form onSubmit={formik.handleSubmit}>
-        <div role="group" aria-labelledby="choices">
+        <div>
           <label>
             Your answer
             <textarea

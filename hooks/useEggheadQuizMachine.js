@@ -6,7 +6,7 @@ import {first, indexOf, find, get} from 'lodash'
 export default function useEggheadQuizMachine(slug) {
   const [state, send] = useMachine(quizMachine, {
     context: {
-      slug: slug, // quiz slug
+      slug: slug, // quiz identifier (slug or id)
     },
   })
 
@@ -21,15 +21,10 @@ export default function useEggheadQuizMachine(slug) {
 
   function handleContinue() {
     send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
-    // const now = Date.now()
-    // const date = new Date(now).toUTCString()
-    // const context = {} // {quizId: quiz.id, questionId: question.id, date}
-    // const response = {...values, question, context}
-    // console.log({response})
-    // window.alert(JSON.stringify(response, null, 2))
-    // markCompleted(question)
   }
-  function handleSubmit(values, actions, question) {
+  function handleSubmit(values, actions) {
+    send('SUBMIT', {answer: {...values}, question: {...currentQuestion}})
+    // window.alert(JSON.stringify(values, null, 2))
     // send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
     // const now = Date.now()
     // const date = new Date(now).toUTCString()

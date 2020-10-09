@@ -8,6 +8,7 @@ import MockData from 'data/quizzes'
 import {createServer} from 'miragejs'
 
 import useEggheadQuizMachine from 'hooks/useEggheadQuizMachine'
+import useEggheadQuestionMachine from 'hooks/useEggheadQuestionMachine'
 
 createServer({
   routes() {
@@ -23,13 +24,13 @@ export default function Home() {
     handleContinue,
     handleSubmit,
     state,
-    send,
   } = useEggheadQuizMachine(
-    'demo', // quiz slug
+    'demo', // quiz identifier (slug or id)
   )
 
-  console.log(nextQuestionId)
+  const {formik} = useEggheadQuestionMachine(currentQuestion, handleSubmit)
 
+  console.log(nextQuestionId)
   console.log(state)
 
   return (
@@ -39,41 +40,49 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <form>
+        <div>
           {state.matches('initializing') ? (
             'loading...'
           ) : (
             <>
-              <div>
-                {/* {questions.map((question) => (
+              <form onSubmit={formik.handleSubmit}>
+                <div>
+                  {/* {questions.map((question) => (
                 <div key={question.id}>{question.text}</div>
               ))} */}
-                {currentQuestion && currentQuestion.text}
-              </div>
-              {state.matches('answered') ? (
+                  {currentQuestion && currentQuestion.text}
+                  <label>
+                    Your answer
+                    <textarea
+                      // disabled={isSubmitted}
+                      name="value"
+                      placeholder="Type your answer here..."
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.value}
+                    />
+                  </label>
+                </div>
+                {!state.matches('answered') && (
+                  <button type="submit">submit</button>
+                )}
+              </form>
+              {state.matches('answered') && (
                 <button type="button" onClick={handleContinue}>
                   continue
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => send('SUBMIT', {answer: 'my answer'})}
-                >
-                  submit
                 </button>
               )}
             </>
           )}
-        </form>
-
-        <div style={{opacity: 0.2}}>
+        </div>
+        {/* <div style={{opacity: 0.2}}>
           <Link href={'/[slug]'} as="/demo">
             <a>
               <h3>Quiz Demo</h3>
             </a>
           </Link>
           <button onClick={() => send('START_QUIZ')}>Start</button>
-        </div>
+        </div> */}
       </main>
     </div>
   )
