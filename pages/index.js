@@ -28,7 +28,7 @@ export default function Home() {
     'demo', // quiz identifier (slug or id)
   )
 
-  const {formik} = useEggheadQuestionMachine(currentQuestion, handleSubmit)
+  // const {formik} = useEggheadQuestionMachine(currentQuestion, handleSubmit)
 
   // useEggheadQuizProgress()
 
@@ -45,9 +45,10 @@ export default function Home() {
           'loading...'
         ) : (
           <QuestionToShow
+            // formik={formik}
             state={state}
+            handleSubmit={handleSubmit}
             question={currentQuestion}
-            formik={formik}
             handleContinue={handleContinue}
             currentAnswer={currentAnswer}
             isDisabled={isDisabled}

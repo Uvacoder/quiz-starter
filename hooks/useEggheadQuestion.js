@@ -16,6 +16,11 @@ export default function useEggheadQuestionMachine(
           value: yup.string().required('Pick one.').nullable(),
         })
 
+      case 'multiple-image-choice':
+        return yup.object().shape({
+          value: yup.string().required('Pick one.').nullable(),
+        })
+
       case 'essay':
         return yup
           .object()

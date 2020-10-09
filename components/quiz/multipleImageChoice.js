@@ -9,7 +9,7 @@ import SubmitAndContinue from '@/components/quiz/submitAndContinue'
 import Markdown from '@/components/quiz/markdown'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
 
-const MultipleChoice = ({
+const MultipleImageChoice = ({
   question,
   state,
   handleContinue,
@@ -29,6 +29,66 @@ const MultipleChoice = ({
         )}
         {question.type}
         <Markdown>{question.text}</Markdown>
+        <form onSubmit={formik.handleSubmit}>
+          <div
+            className="grid gap-4 grid-cols-2 py-4"
+            role="group"
+            aria-labelledby="choices"
+          >
+            {question.choices.map((choice) => {
+              const correctAnswer = question.correctAnswer === choice.value
+              return (
+                <div key={choice.value}>
+                  <label>
+                    <input
+                      disabled={isDisabled}
+                      type="radio"
+                      name="value"
+                      value={choice.value}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      checked={formik.values.value === choice.value}
+                      className="mr-1"
+                    />
+                    {choice.text}
+                    <img
+                      src={choice.image}
+                      alt={choice.text}
+                      className="border border-gray-200"
+                    />
+
+                    {isAnswered &&
+                      state.matches('answered') &&
+                      (correctAnswer ? ' (correct)' : ' (incorrect)')}
+                  </label>
+                </div>
+              )
+            })}
+          </div>
+        </form>
+        {/* {question.choices && (
+          <div className="grid gap-4 grid-cols-2 py-4">
+            {question.choices.map((choice) => {
+              const correctAnswer = question.correctAnswer === choice.value
+              const selected = formik.values.value === choice.value
+              return (
+                <div
+                  key={choice.value}
+                  className={`border-2 ${
+                    selected ? 'border-blue-500' : 'border-transparent'
+                  }`}
+                >
+                  {selected && '⦿'} {choice.text}
+                  <img
+                    src={choice.image}
+                    alt={choice.text}
+                    className="border border-gray-200"
+                  />
+                </div>
+              )
+            })}
+          </div>
+        )} */}
         {showExplanation && <Explanation>{question.explanation}</Explanation>}
       </QuestionWrapper>
       <AnswerWrapper>
@@ -75,11 +135,11 @@ const MultipleChoice = ({
         </form>
 
         {state.matches('answered') && question.explanation && (
-          <Continue onClick={handleContinue} isDisabled={isDisabled} />
+          <Continue onClick={handleContinue} />
         )}
       </AnswerWrapper>
     </QuizWrapper>
   )
 }
 
-export default MultipleChoice
+export default MultipleImageChoice

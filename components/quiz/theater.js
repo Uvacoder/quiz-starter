@@ -3,15 +3,17 @@ import QuestionWrapper from '@/components/quiz/questionWrapper'
 import AnswerWrapper from '@/components/quiz/answerWrapper'
 import Explanation from '@/components/quiz/explanation'
 import QuizWrapper from '@/components/quiz/wrapper'
+import useEggheadQuestion from '@/hooks/useEggheadQuestion'
 
 const Theater = ({
-  formik,
   question,
   state,
   handleContinue,
+  handleSubmit,
   isDisabled,
   isAnswered,
 }) => {
+  const {formik} = useEggheadQuestion(question, handleSubmit)
   const [showExplanation, setShowExplanation] = React.useState(false)
 
   return (

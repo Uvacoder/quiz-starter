@@ -6,15 +6,17 @@ import QuizWrapper from '@/components/quiz/wrapper'
 import Markdown from '@/components/quiz/markdown'
 import Submit from '@/components/quiz/submit'
 import Continue from '@/components/quiz/continue'
+import useEggheadQuestion from '@/hooks/useEggheadQuestion'
 
 const Essay = ({
-  formik,
   question,
   state,
   handleContinue,
   isDisabled,
+  handleSubmit,
   currentAnswer,
 }) => {
+  const {formik} = useEggheadQuestion(question, handleSubmit)
   const showExplanation = question.explanation && !state.matches('idle')
 
   return (

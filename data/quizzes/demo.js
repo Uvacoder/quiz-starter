@@ -32,12 +32,46 @@ console.log(typeof(numberOfTentacles));</pre>`,
     {
       id: '30',
       version: '1.0.0',
+      type: 'multiple-image-choice',
+      text: `# Which one of these diagrams best matches your sketch and our mental model after that code runs?`,
+      choices: [
+        {
+          value: 'a',
+          text: 'A',
+          image:
+            'https://images.typeform.com/images/MyEfFAET2Bc5/image/default',
+        },
+        {
+          value: 'b',
+          text: 'B',
+          image:
+            'https://images.typeform.com/images/RhyMWGtGYKfc/image/default',
+        },
+        {
+          value: 'c',
+          text: 'C',
+          image:
+            'https://images.typeform.com/images/Tz2tC94NSSEp/image/default',
+        },
+        {
+          value: 'd',
+          text: 'D',
+          image:
+            'https://images.typeform.com/images/gDeJqjnHP9aP/image/default',
+        },
+      ],
+      correctAnswer: 'a',
+      explanation: 'Explanation lorem ipsum dolor sit amet.',
+    },
+    {
+      id: '40',
+      version: '1.0.0',
       type: 'theater',
       text: 'Lorem ipsum dolor sit amet?',
       explanation: 'Explanation lorem ipsum dolor sit amet.',
     },
     {
-      id: '40',
+      id: '50',
       version: '1.0.0',
       type: 'sketch',
       text: 'Sketch a diagram of your JavaScript Universe.',
