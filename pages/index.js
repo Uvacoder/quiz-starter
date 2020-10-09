@@ -4,9 +4,11 @@ import {createServer} from 'miragejs'
 import useEggheadQuiz from '@/hooks/useEggheadQuiz'
 import QuestionToShow from 'components/quiz/questionToShow'
 
+const QUIZ_ID = 'demo'
+
 createServer({
   routes() {
-    this.get('/api/quiz', () => MockData)
+    this.get(`/api/quiz/${QUIZ_ID}`, () => MockData)
     this.passthrough()
   },
 })
@@ -19,10 +21,8 @@ export default function Home() {
     handleSubmit,
     isDisabled,
     currentAnswer,
-    nextQuestionId,
-    isCurrentQuestionAnswered,
   } = useEggheadQuiz(
-    'demo', // quiz id
+    QUIZ_ID, // quiz id
   )
 
   console.log(state)
@@ -38,7 +38,6 @@ export default function Home() {
           'loading...'
         ) : (
           <QuestionToShow
-            // formik={formik}
             state={state}
             handleSubmit={handleSubmit}
             question={currentQuestion}
