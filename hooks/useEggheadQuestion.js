@@ -1,11 +1,7 @@
 import * as yup from 'yup'
 import {useFormik} from 'formik'
 
-export default function useEggheadQuestionMachine(
-  question,
-  handleSubmit,
-  quizId,
-) {
+export default function useEggheadQuestionMachine(question, handleSubmit) {
   const {type} = question ? question : ''
 
   function schemaFor(type) {

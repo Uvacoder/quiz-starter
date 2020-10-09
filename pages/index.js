@@ -8,7 +8,7 @@ const QUIZ_ID = 'demo'
 
 createServer({
   routes() {
-    this.get(`/api/quiz/${QUIZ_ID}`, () => MockData)
+    this.get(`/api/quiz/${QUIZ_ID}`, () => MockData[0]) // first quiz being a demo quiz
     this.passthrough()
   },
 })
@@ -21,9 +21,7 @@ export default function Home() {
     handleSubmit,
     isDisabled,
     currentAnswer,
-  } = useEggheadQuiz(
-    QUIZ_ID, // quiz id
-  )
+  } = useEggheadQuiz(QUIZ_ID)
 
   console.log(state)
 

@@ -31,9 +31,9 @@ export default function useEggheadQuizMachine(quizId) {
     }
     send('NEXT_QUESTION', {nextQuestionId: nextQuestionId})
   }
-  function handleSubmit(values, actions) {
-    const now = Date.now()
-    const date = new Date(now).toUTCString()
+  function handleSubmit(values, _actions) {
+    // const now = Date.now()
+    // const date = new Date(now).toUTCString()
     // const context = {quizId: quiz.id, questionId: question.id, date}
     // const response = {...values, question, context}
     send('SUBMIT', {answer: {...values, ...currentQuestion}})

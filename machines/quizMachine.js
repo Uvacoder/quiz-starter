@@ -1,5 +1,5 @@
 import {createMachine, assign} from 'xstate'
-import {get, find, first, filter, isEmpty} from 'lodash'
+import {get, find, first, isEmpty} from 'lodash'
 import {fetchQuizData} from 'utils/fetchQuizData'
 
 export const quizMachine = createMachine(
@@ -21,21 +21,14 @@ export const quizMachine = createMachine(
           onDone: {
             target: 'idle',
             actions: assign({
-              questions: (context, event) => {
+              questions: (_context, event) => {
                 const {data} = event
-                console.log({data})
-                const questions = get(
-                  first(filter(data, (quiz) => quiz.id === context.quizId)),
-                  'questions',
-                )
+                const questions = get(data, 'questions')
                 return questions
               },
-              currentQuestionId: (context, event) => {
+              currentQuestionId: (_context, event) => {
                 const {data} = event
-                const questions = get(
-                  first(filter(data, (quiz) => quiz.id === context.quizId)),
-                  'questions',
-                )
+                const questions = get(data, 'questions')
                 const firstQuestionId = get(first(questions), 'id')
                 return firstQuestionId
               },
