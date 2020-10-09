@@ -5,8 +5,7 @@ import Explanation from '@/components/quiz/explanation'
 import QuizWrapper from '@/components/quiz/wrapper'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
 import Markdown from '@/components/quiz/markdown'
-import Submit from '@/components/quiz/submit'
-import Continue from '@/components/quiz/continue'
+import SubmitAndContinue from '@/components/quiz/submitAndContinue'
 
 const Theater = ({
   question,
@@ -17,7 +16,7 @@ const Theater = ({
   isAnswered,
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
-  // const [showExplanation, setShowExplanation] = React.useState(false)
+  const [showExplanation, setShowExplanation] = React.useState(false)
 
   return (
     <QuizWrapper>
@@ -25,13 +24,14 @@ const Theater = ({
         {isAnswered && state.matches('answered') && '✅'}
         {question.type}
         <Markdown>{question.text}</Markdown>
-        {/* <button
+        <button
+          className="mt-4 bg-gray-700 px-3 py-2 rounded-md text-white"
           onClick={() => setShowExplanation(!showExplanation)}
           type="button"
         >
           {showExplanation ? 'hide explanation' : 'show explanation'}
-        </button> */}
-        {state.matches('answered') && question.explanation && (
+        </button>
+        {showExplanation && question.explanation && (
           <Explanation>{question.explanation}</Explanation>
         )}
       </QuestionWrapper>
@@ -86,22 +86,14 @@ const Theater = ({
               </label>
             </div>
             {formik.errors.value}
-            <Submit
-              isDisabled={isDisabled}
+            <SubmitAndContinue
+              state={state}
+              handleContinue={handleContinue}
+              isDisabled={state.matches('answering')}
               isSubmitting={state.matches('answering')}
-              explanation={question.explanation}
             />
           </>
         </form>
-        {state.matches('answered') && <Continue onClick={handleContinue} />}
-        {/* {state.matches('answered') && (
-          <SubmitAndContinue
-            state={state}
-            handleContinue={handleContinue}
-            isDisabled={state.matches('answering')}
-            isSubmitting={state.matches('answering')}
-          />
-        )} */}
       </AnswerWrapper>
     </QuizWrapper>
   )
