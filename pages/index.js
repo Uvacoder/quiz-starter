@@ -3,6 +3,9 @@ import MockData from 'data/quizzes'
 import {createServer} from 'miragejs'
 import useEggheadQuiz from '@/hooks/useEggheadQuiz'
 import QuestionToShow from 'components/quiz/questionToShow'
+import AnsweredQuestionToShow from 'components/quiz/answeredQuestionToShow'
+import {filter, map} from 'lodash'
+import {Element} from 'react-scroll'
 
 const QUIZ_ID = 'demo'
 
@@ -17,6 +20,7 @@ export default function Home() {
   const {
     state,
     currentQuestion,
+    nextQuestionId,
     handleContinue,
     handleSubmit,
     isDisabled,
@@ -31,18 +35,37 @@ export default function Home() {
         <title>Quiz Demo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex justify-center min-h-screen w-full md:py-32 py-0">
+      <main className="flex flex-col items-center justify-center min-h-screen w-full md:py-32 py-0">
         {state.matches('initializing') ? (
           'loading...'
         ) : (
-          <QuestionToShow
-            state={state}
-            handleSubmit={handleSubmit}
-            question={currentQuestion}
-            handleContinue={handleContinue}
-            currentAnswer={currentAnswer}
-            isDisabled={isDisabled}
-          />
+          <>
+            {map(
+              filter(state.context.answers, (a) => a.id !== currentQuestion.id),
+              (answer) => (
+                <AnsweredQuestionToShow
+                  key={answer.id}
+                  question={answer}
+                  answers={state.context.answers}
+                  quizId={QUIZ_ID}
+                  currentAnswer={answer}
+                  // answered -> disabled
+                  handleSubmit={() => {}}
+                  handleContinue={() => {}}
+                  isDisabled={true}
+                />
+              ),
+            )}
+            <QuestionToShow
+              question={currentQuestion}
+              currentAnswer={currentAnswer}
+              state={state}
+              handleSubmit={handleSubmit}
+              handleContinue={handleContinue}
+              isDisabled={isDisabled}
+            />
+            <Element name={nextQuestionId} />
+          </>
         )}
       </main>
     </>

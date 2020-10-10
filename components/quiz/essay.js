@@ -17,7 +17,8 @@ const Essay = ({
   currentAnswer,
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
-  const showExplanation = question.explanation && !state.matches('idle')
+  const showExplanation =
+    question.explanation && (!state.matches('idle') || question.value)
 
   return (
     <QuizWrapper>
