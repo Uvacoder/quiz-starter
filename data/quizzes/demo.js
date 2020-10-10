@@ -90,13 +90,6 @@ let nose = 'must' + 'ache';
       text: `# Lorem Ipsum Dolor Sit Amet`,
       explanation: `It is what it is.`,
     },
-    {
-      id: '60',
-      version: '1.0.0',
-      type: 'theater',
-      text: `# Lorem Ipsum Dolor Sit Amet`,
-      explanation: `It is what it is.`,
-    },
     // {
     //   id: '60',
     //   version: '1.0.0',
