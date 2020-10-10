@@ -45,7 +45,7 @@ export default function useEggheadQuestionMachine(question, handleSubmit) {
   const formik = useFormik({
     // enableReinitialize: true,
     initialValues: {
-      value: '',
+      value: question?.value || '',
     },
     validationSchema: schemaFor(type),
     onSubmit: (values, actions) => {

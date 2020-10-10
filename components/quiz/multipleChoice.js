@@ -8,6 +8,7 @@ import Continue from '@/components/quiz/continue'
 import SubmitAndContinue from '@/components/quiz/submitAndContinue'
 import Markdown from '@/components/quiz/markdown'
 import useEggheadQuestion from '@/hooks/useEggheadQuestion'
+import {isEmpty} from 'lodash'
 
 const MultipleChoice = ({
   question,
@@ -19,7 +20,8 @@ const MultipleChoice = ({
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
   const hasAnsweredCorrectly = question.correctAnswer === formik.values.value
-  const showExplanation = question.explanation && state.matches('answered')
+  const showExplanation =
+    question.explanation && (!state.matches('idle') || question.value)
 
   return (
     <QuizWrapper>
@@ -52,7 +54,8 @@ const MultipleChoice = ({
                     />
                     {choice.text}{' '}
                     {currentAnswer &&
-                      state.matches('answered') &&
+                      (state.matches('answered') || question.value) &&
+                      question.correctAnswer &&
                       (correctAnswer ? '✅' : '❌')}
                   </label>
                 </div>
@@ -67,20 +70,23 @@ const MultipleChoice = ({
               explanation={question.explanation}
             />
           ) : (
-            <SubmitAndContinue
-              state={state}
-              handleContinue={handleContinue}
-              isDisabled={state.matches('answering')}
-              isSubmitting={state.matches('answering')}
-            />
+            isEmpty(question.value) && (
+              <SubmitAndContinue
+                state={state}
+                handleContinue={handleContinue}
+                isDisabled={state.matches('answering')}
+                isSubmitting={state.matches('answering')}
+              />
+            )
           )}
         </form>
 
-        {state.matches('answered') && (
-          <div className="pt-4 font-semibold">
-            {hasAnsweredCorrectly ? '🎉 Correct!' : 'Incorrect'}
-          </div>
-        )}
+        {(state.matches('answered') || question.value) &&
+          question.correctAnswer && (
+            <div className="pt-4 font-semibold">
+              {hasAnsweredCorrectly ? '🎉 Correct!' : 'Incorrect'}
+            </div>
+          )}
 
         {state.matches('answered') &&
           (question.explanation || question.correctAnswer) && (

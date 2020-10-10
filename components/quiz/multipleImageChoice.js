@@ -19,7 +19,8 @@ const MultipleImageChoice = ({
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
   const hasAnsweredCorrectly = question.correctAnswer === formik.values.value
-  const showExplanation = question.explanation && state.matches('answered')
+  const showExplanation =
+    question.explanation && (!state.matches('idle') || question.value)
 
   return (
     <QuizWrapper>
@@ -53,7 +54,7 @@ const MultipleImageChoice = ({
                     />
                     {choice.text}{' '}
                     {currentAnswer &&
-                      state.matches('answered') &&
+                      (state.matches('answered') || question.value) &&
                       (correctAnswer ? '✅' : '❌')}
                     <img
                       src={choice.image}
@@ -88,7 +89,7 @@ const MultipleImageChoice = ({
                     />
                     {choice.text}{' '}
                     {currentAnswer &&
-                      state.matches('answered') &&
+                      (state.matches('answered') || question.value) &&
                       (correctAnswer ? '✅' : '❌')}
                   </label>
                 </div>

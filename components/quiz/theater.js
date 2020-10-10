@@ -16,7 +16,9 @@ const Theater = ({
   isAnswered,
 }) => {
   const {formik} = useEggheadQuestion(question, handleSubmit)
-  const [showExplanation, setShowExplanation] = React.useState(false)
+  const [showExplanation, setShowExplanation] = React.useState(
+    question?.value ? true : false,
+  )
 
   return (
     <QuizWrapper>
