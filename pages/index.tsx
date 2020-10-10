@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import MockData from 'data/quizzes'
 import {createServer} from 'miragejs'
-import useEggheadQuiz from '@/hooks/useEggheadQuiz'
+import useEggheadQuiz from 'hooks/useEggheadQuiz'
 import QuestionToShow from 'components/quiz/questionToShow'
 import AnsweredQuestionToShow from 'components/quiz/answeredQuestionToShow'
 import {filter, map} from 'lodash'

@@ -2,7 +2,32 @@ import {createMachine, assign} from 'xstate'
 import {get, find, first, isEmpty} from 'lodash'
 import {fetchQuizData} from 'utils/fetchQuizData'
 
-export const quizMachine = createMachine(
+interface QuizStateSchema {
+  states: {
+    initializing: {}
+    idle: {}
+    answering: {}
+    answered: {}
+    failure: {}
+  }
+}
+
+type QuizEvent =
+  | {type: 'SUBMIT'; answer: {}; answers: []}
+  | {type: 'NEXT_QUESTION'; nextQuestionId: string}
+
+interface QuizContext {
+  quizId: string
+  questions: []
+  answers: []
+  currentQuestionId: string
+}
+
+export const quizMachine = createMachine<
+  QuizContext,
+  QuizStateSchema,
+  QuizEvent
+>(
   {
     id: 'quiz',
     initial: 'initializing',
@@ -42,7 +67,7 @@ export const quizMachine = createMachine(
           SUBMIT: {
             target: 'answering',
             actions: assign({
-              answers: (context, event) => {
+              answers: (context: any, event: any) => {
                 const {answers} = context
                 return [...answers, event.answer]
               },
@@ -76,7 +101,7 @@ export const quizMachine = createMachine(
           NEXT_QUESTION: {
             target: 'idle',
             actions: assign({
-              currentQuestionId: (_context, event) => {
+              currentQuestionId: (_context: any, event: any) => {
                 return event.nextQuestionId
               },
             }),

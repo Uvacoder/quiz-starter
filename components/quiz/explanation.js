@@ -1,4 +1,4 @@
-import Markdown from '@/components/quiz/markdown'
+import Markdown from 'components/quiz/markdown'
 
 export default function Explanation({children}) {
   return (

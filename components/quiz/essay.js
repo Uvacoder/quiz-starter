@@ -1,12 +1,12 @@
 import React from 'react'
-import QuestionWrapper from '@/components/quiz/questionWrapper'
-import AnswerWrapper from '@/components/quiz/answerWrapper'
-import Explanation from '@/components/quiz/explanation'
-import QuizWrapper from '@/components/quiz/wrapper'
-import Markdown from '@/components/quiz/markdown'
-import Submit from '@/components/quiz/submit'
-import Continue from '@/components/quiz/continue'
-import useEggheadQuestion from '@/hooks/useEggheadQuestion'
+import QuestionWrapper from 'components/quiz/questionWrapper'
+import AnswerWrapper from 'components/quiz/answerWrapper'
+import Explanation from 'components/quiz/explanation'
+import QuizWrapper from 'components/quiz/wrapper'
+import Markdown from 'components/quiz/markdown'
+import Submit from 'components/quiz/submit'
+import Continue from 'components/quiz/continue'
+import useEggheadQuestion from 'hooks/useEggheadQuestion'
 
 const Essay = ({
   question,

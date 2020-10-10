@@ -4,7 +4,9 @@ import {first, indexOf, find, get} from 'lodash'
 import {useRouter} from 'next/router'
 import {scroller} from 'react-scroll'
 
-export default function useEggheadQuizMachine(quizId) {
+
+
+export default function useEggheadQuiz(quizId: string) {
   const [state, send] = useMachine(quizMachine, {
     context: {
       quizId: quizId,

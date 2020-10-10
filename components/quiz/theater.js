@@ -1,11 +1,11 @@
 import React from 'react'
-import QuestionWrapper from '@/components/quiz/questionWrapper'
-import AnswerWrapper from '@/components/quiz/answerWrapper'
-import Explanation from '@/components/quiz/explanation'
-import QuizWrapper from '@/components/quiz/wrapper'
-import useEggheadQuestion from '@/hooks/useEggheadQuestion'
-import Markdown from '@/components/quiz/markdown'
-import SubmitAndContinue from '@/components/quiz/submitAndContinue'
+import QuestionWrapper from 'components/quiz/questionWrapper'
+import AnswerWrapper from 'components/quiz/answerWrapper'
+import Explanation from 'components/quiz/explanation'
+import QuizWrapper from 'components/quiz/wrapper'
+import useEggheadQuestion from 'hooks/useEggheadQuestion'
+import Markdown from 'components/quiz/markdown'
+import SubmitAndContinue from 'components/quiz/submitAndContinue'
 
 const Theater = ({
   question,
