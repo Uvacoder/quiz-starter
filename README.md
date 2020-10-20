@@ -1,7 +1,7 @@
-### ☁️ [Take a demo quiz](https://quiz.vojta.vercel.app/)
+### ☁️ [Take a demo quiz](https://quiz-delta.vercel.app)
 
 
-<img src="https://quiz.vojta.vercel.app/demo.gif" width="500">
+<img src="https://quiz-delta.vercel.app/demo.gif" width="500">
 
 ---
 
